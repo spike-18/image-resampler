@@ -1,30 +1,72 @@
 import numpy as np
 
 
-def node_wise_interpolation(donor_mesh, target_x, method="linear"):
-    target_values = np.zeros_like(target_x)
-    num_donors = donor_mesh.shape[1]
-    num_targets = len(target_x)
+def node_wise_interpolation(donor_mesh, donor_values, target_mesh):
+    donor_shape = (donor_mesh.shape[0], donor_mesh.shape[1])
+    target_shape = (target_mesh.shape[0], target_mesh.shape[1])
 
-    for j in range(num_donors - 1):
-        local_interpol_f = None
-        if method == "linear":
-            k = (donor_mesh[1][j + 1] - donor_mesh[1][j]) / (
-                donor_mesh[0][j + 1] - donor_mesh[0][j]
-            )
-            b = donor_mesh[1][j] - k * donor_mesh[0][j]
+    target_values = np.zeros(target_shape, dtype=np.float32)
 
-            def local_interpol_f(x):
-                return k * x + b
+    def local_interpol_f(x, y, a, b, c):
+        return a * x + b * y + c
 
-        for i in range(num_targets):
-            if donor_mesh[0][j] <= target_x[i] and target_x[i] < donor_mesh[0][j + 1]:
-                target_values[i] = local_interpol_f(target_x[i])
+    for i in range(donor_shape[0]):
+        for j in range(donor_shape[1]):
+            if i != donor_shape[0] - 1 and j != donor_shape[1] - 1:
+                a = (donor_values[i + 1][j] - donor_values[i][j]) / (
+                    donor_mesh[i + 1][j][0] - donor_mesh[i][j][0]
+                )
 
-        if donor_mesh[0][num_donors - 1] <= target_x[i]:
-            target_values[i] = donor_mesh[1][num_donors - 1]
+                b = (donor_values[i][j + 1] - donor_values[i][j]) / (
+                    donor_mesh[i][j + 1][1] - donor_mesh[i][j][1]
+                )
 
-    return np.array([target_x, target_values])
+                c = (
+                    donor_values[i][j]
+                    - a * donor_mesh[i][j][0]
+                    - b * donor_mesh[i][j][1]
+                )
+
+                for k in range(target_shape[0]):
+                    for m in range(target_shape[1]):
+                        if (
+                            donor_mesh[i][j][0] <= target_mesh[k][m][0]
+                            and target_mesh[k][m][0] < donor_mesh[i + 1][j][0]
+                        ):
+                            if (
+                                donor_mesh[i][j][1] <= target_mesh[k][m][1]
+                                and target_mesh[k][m][1] < donor_mesh[i][j + 1][1]
+                            ):
+                                target_values[k][m] = local_interpol_f(
+                                    donor_mesh[i][j][0], donor_mesh[i][j][1], a, b, c
+                                )
+
+            elif i != donor_shape[0] - 1:
+                for k in range(target_shape[0]):
+                    for m in range(target_shape[1]):
+                        if (
+                            donor_mesh[i][j][0] <= target_mesh[k][m][0]
+                            and target_mesh[k][m][0] < donor_mesh[i + 1][j][0]
+                        ):
+                            if donor_mesh[i][j][1] <= target_mesh[k][m][1]:
+                                target_values[k][m] = donor_values[i][j]
+
+            elif j != donor_shape[1] - 1:
+                for k in range(target_shape[0]):
+                    for m in range(target_shape[1]):
+                        if donor_mesh[i][j][0] <= target_mesh[k][m][0]:
+                            if (
+                                donor_mesh[i][j][1] <= target_mesh[k][m][1]
+                                and target_mesh[k][m][1] < donor_mesh[i][j + 1][1]
+                            ):
+                                target_values[k][m] = donor_values[i][j]
+
+            else:
+                target_values[k][m] = donor_values[donor_shape[0] - 1][
+                    donor_shape[1] - 1
+                ]
+
+    return target_values
 
 
 def galerkin_interpolation():
