@@ -1,15 +1,14 @@
-import numpy as np
 import click
 import matplotlib.pyplot as plt
 from skimage import data
 
-from . import __version__
 from .methods import nearest_neighbor, bilinear_interpolation, piecewise_linear_interpolation, l2_optimal_interpolation
 
 
 @click.command()
-@click.version_option(version=__version__)
-def main():
+def example():
+    
+    click.secho("Example comparison between interpolation methods is loaded.", fg='green')
     
     image = data.camera()  # shape: (512, 512)
     
@@ -45,6 +44,3 @@ def main():
     
     plt.tight_layout()
     plt.show()
-
-# if __name__ == '__main__':
-#     main()

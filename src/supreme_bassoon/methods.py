@@ -1,6 +1,8 @@
 import numpy as np
 from numpy.fft import fft2, ifft2, fftshift, ifftshift
 
+
+
 def nearest_neighbor(image, scale):
     in_h, in_w = image.shape[:2]
     out_h, out_w = int(in_h * scale), int(in_w * scale)

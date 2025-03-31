@@ -16,8 +16,8 @@ dependencies = [
 ]
 
 [project.scripts]
-console-test = "supreme_bassoon.console:main"
-visualize    = "supreme_bassoon.visualize:main"
+example = "supreme_bassoon.visualize:example"
+supreme-bassoon = "supreme_bassoon.__main__:main"
 
 
 [build-system]
