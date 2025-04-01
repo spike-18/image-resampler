@@ -2,7 +2,7 @@ import numpy as np
 from numpy.fft import fft2, fftshift, ifft2, ifftshift
 
 
-def nearest_neighbor(image, scale):
+def nearest_neighbor(image : np.array, scale : int) -> np.ndarray:
     in_h, in_w = image.shape[:2]
     out_h, out_w = int(in_h * scale), int(in_w * scale)
 
@@ -19,7 +19,7 @@ def nearest_neighbor(image, scale):
 
     return out_image
 
-def bilinear_interpolation(image, scale):
+def bilinear_interpolation(image : np.array, scale : int) -> np.ndarray:
     in_h, in_w = image.shape[:2]
     out_h, out_w = int(in_h * scale), int(in_w * scale)
 
@@ -53,10 +53,16 @@ def bilinear_interpolation(image, scale):
             out_image[i, j] = value
     return out_image
 
-def piecewise_linear_interpolation(image, scale):
+def piecewise_linear_interpolation(
+    image: np.ndarray, scale: int,
+) -> np.ndarray:
+
     in_h, in_w = image.shape[:2]
     new_h = int(in_h * scale)
-    temp = np.zeros((new_h, in_w) + (() if image.ndim == 2 else (image.shape[2],)), dtype=image.dtype)
+    temp = np.zeros(
+        (new_h, in_w) + (() if image.ndim == 2 else (image.shape[2],)),
+        dtype=image.dtype,
+    )
 
     row_indices = np.arange(new_h) / scale
     for j in range(in_w):
@@ -66,7 +72,9 @@ def piecewise_linear_interpolation(image, scale):
         else:
             for c in range(image.shape[2]):
                 col_data = image[:, j, c]
-                temp[:, j, c] = np.interp(row_indices, np.arange(in_h), col_data)
+                temp[:, j, c] = np.interp(row_indices,
+                                          np.arange(in_h),
+                                          col_data)
 
     new_w = int(in_w * scale)
     if image.ndim == 2:
@@ -82,16 +90,21 @@ def piecewise_linear_interpolation(image, scale):
         else:
             for c in range(image.shape[2]):
                 row_data = temp[i, :, c]
-                out_image[i, :, c] = np.interp(col_indices, np.arange(in_w), row_data)
+                out_image[i, :, c] = np.interp(col_indices,
+                                               np.arange(in_w),
+                                               row_data)
 
     return out_image
 
-def l2_optimal_interpolation(image, scale):
+def l2_optimal_interpolation(image : np.array, scale : int) -> np.ndarray:
     if not float(scale).is_integer():
-        raise ValueError("L2 optimal interpolation via Fourier zero-padding requires an integer scale factor.")
+        msg = ("L2 optimal interpolation via Fourier zero-padding "
+            "requires an integer scale factor."
+        )
+        raise ValueError(msg)
     scale = int(scale)
 
-    def fourier_upscale(channel):
+    def fourier_upscale(channel : np.array) -> np.ndarray:
         h, w = channel.shape
         f = fftshift(fft2(channel))
 
@@ -102,14 +115,16 @@ def l2_optimal_interpolation(image, scale):
         h_center, w_center = new_h // 2, new_w // 2
         h_half, w_half = h // 2, w // 2
 
-        f_up[h_center - h_half:h_center - h_half + h, w_center - w_half:w_center - w_half + w] = f
+        f_up[
+            h_center - h_half : h_center - h_half + h,
+            w_center - w_half : w_center - w_half + w,
+        ] = f
 
         upscaled = np.real(ifft2(ifftshift(f_up)))
         return upscaled * (scale**2)
 
     if image.ndim == 2:
         return fourier_upscale(image)
-    channels = []
-    for c in range(image.shape[2]):
-        channels.append(fourier_upscale(image[..., c]))
+    channels = [fourier_upscale(image[..., c]) for c in range(image.shape[2])]
+
     return np.stack(channels, axis=-1)
