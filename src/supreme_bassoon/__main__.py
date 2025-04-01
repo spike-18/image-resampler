@@ -70,3 +70,7 @@ def list_methods():
     pw - piecewise linear
     l2 - l2 optimal
 """)
+    
+
+if __name__ == "__main__":
+    click.echo("Use \'poetry run example\' to print example or \'poetry run interpolate\' to upscale image.")
