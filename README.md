@@ -1,7 +1,3 @@
-Below is a sample README that you could use for the **supreme-bassoon** project:
-
----
-
 # Supreme Bassoon
 
 **Supreme Bassoon** is a Python command-line tool for image interpolation and scaling. The project implements several interpolation methods to upscale images and visualize the results. It’s built using popular libraries such as NumPy, Pillow, Matplotlib, and Click.
@@ -26,7 +22,7 @@ The tool accepts an image file as input, performs the chosen interpolation, and 
 
 ## Requirements
 
-- Python 3.7+
+- Python 3.10+
 - [NumPy](https://numpy.org/)
 - [Pillow](https://python-pillow.org/)
 - [Matplotlib](https://matplotlib.org/)
@@ -47,16 +43,6 @@ Install the dependencies using [Poetry](https://python-poetry.org/):
 poetry install
 ```
 
-Alternatively, if you prefer using pip, you can create a virtual environment and install the requirements manually (ensure you install the packages listed above).
-
-## Usage
-
-You can run the tool directly via the command line. For example, to upscale an image using the nearest neighbor method:
-
-```bash
-poetry run python -m supreme_bassoon path/to/your/image.jpg --method nn --scale 2 --verbose --save
-```
-
 ### Command Options
 
 - `file`: The input image file.
@@ -68,6 +54,31 @@ poetry run python -m supreme_bassoon path/to/your/image.jpg --method nn --scale 
 - `-s, --scale`: Scaling factor (default is 2).
 - `-v, --verbose`: Print detailed information about the interpolation process.
 - `--save`: Save the upscaled image to the `output/` directory.
+
+## Example Usage
+
+Here are some concrete examples to help you get started:
+
+0. **Example comparison of methods**  
+   Upscale an example image by a factor of 2 using several methods, print them alongside:
+
+   ```bash
+   poetry run example
+   ```
+
+1. **Nearest Neighbor Interpolation**  
+   Upscale an image by a factor of 3 using the bilinear interpolation method, print the parameters, and save the output:
+
+   ```bash
+   poetry run interpolate example.jpg --method nn --scale 3 --verbose --save
+   ```
+
+2. **Piecewise Linear Interpolation**  
+   Use piecewise linear interpolation to upscale an image by a factor of 2:
+
+   ```bash
+   poetry run python interpolate example.jpg --method pw --scale 2
+   ```
 
 ## Interpolation Methods
 
@@ -85,13 +96,10 @@ Contributions are welcome! If you’d like to improve the code or add new featur
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details (if provided).
+This project is not licensed.
 
 ## Acknowledgments
 
 - Thanks to the developers of NumPy, Pillow, Matplotlib, and Click for making high-quality tools available to the community.
 - Inspired by various image processing and interpolation techniques in the Python ecosystem.
-
----
-
-Feel free to modify this README to better suit your project's specifics or to add any additional details you find necessary.
+- Thanks to ChatGPT and DeepSeek
