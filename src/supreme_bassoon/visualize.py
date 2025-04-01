@@ -17,7 +17,6 @@ def example():
     nn_image = nearest_neighbor(image, scale)
     bilinear_image = bilinear_interpolation(image, scale)
     piecewise_image = piecewise_linear_interpolation(image, scale)
-    
     l2_image = l2_optimal_interpolation(image, scale)
     
     fig, axes = plt.subplots(1, 5, figsize=(20, 5))

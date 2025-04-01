@@ -1,2 +1,4 @@
 .vscode
 src/supreme_bassoon/__pycache__
+output/*
+examples*
