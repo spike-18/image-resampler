@@ -15,30 +15,17 @@ from .methods import (
 @click.command()
 @click.version_option(version=__version__)
 @click.argument("file", type=click.File(mode="rb"))
-
-@click.option("-m", "--method",
-              default="nn",
-              help="method to use for interpolation")
-@click.option("-s", "--scale",
-              type=int,
-              default=2,
-              help="scaling factor")
-@click.option("-v", "--verbose",
-              is_flag=True,
-              default=False,
-              help="print interpolation parameters")
-@click.option("--save",
-              is_flag=True,
-              default=False,
-              help="save interpolated image")
+@click.option("-m", "--method", default="nn", help="method to use for interpolation")
+@click.option("-s", "--scale", type=int, default=2, help="scaling factor")
+@click.option("-v", "--verbose", is_flag=True, default=False, help="print interpolation parameters")
+@click.option("--save", is_flag=True, default=False, help="save interpolated image")
 def main(
-    file : click.File,
-    method : str,
-    scale : int,
-    save : bool,
-    verbose : bool,
+    file: click.File,
+    method: str,
+    scale: int,
+    save: bool,
+    verbose: bool,
 ) -> int | None:
-
     if verbose:
         click.secho(f"Interpolation method: {method}")
         click.secho(f"Filename: {file.name}")
@@ -58,16 +45,14 @@ def main(
         case "l2":
             out_image = l2_optimal_interpolation(image, scale)
         case _:
-            click.secho(f"Incorrect '{method}' method. List of valid methods:",
-                        fg="red")
+            click.secho(f"Incorrect '{method}' method. List of valid methods:", fg="red")
             list_methods()
             return 1
 
     if save:
         out_name = str(file.name).split("/")[-1].split(".")[0]
         Image.fromarray(out_image).save(f"output/{out_name}_int.png")
-        click.secho(f"Image {out_name} has been saved to ./output/",
-                    fg="green")
+        click.secho(f"Image {out_name} has been saved to ./output/", fg="green")
 
     fig, axes = plt.subplots(1, 2, figsize=(16, 8))
 
@@ -88,19 +73,18 @@ def main(
     return None
 
 
-
 def list_methods() -> None:
     click.echo(
-"""
+        """
     nn - nearest neighbor
     bl - bilinear
     pw - piecewise linear
     l2 - l2 optimal
-""")
+"""
+    )
 
 
 if __name__ == "__main__":
     click.echo(
-        "Use 'poetry run example' to print example "
-        "or 'poetry run interpolate' to upscale image.",
-        )
+        "Use 'poetry run example' to print example or 'poetry run interpolate' to upscale image.",
+    )

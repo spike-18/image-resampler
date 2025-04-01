@@ -12,9 +12,7 @@ from .methods import (
 
 @click.command()
 def example() -> None:
-
-    click.secho("Example comparison between interpolation methods is loaded.",
-                fg="green")
+    click.secho("Example comparison between interpolation methods is loaded.", fg="green")
 
     image = data.camera()  # shape: (512, 512)
 

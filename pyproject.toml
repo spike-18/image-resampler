@@ -29,10 +29,16 @@ build-backend = "poetry.core.masonry.api"
 ruff = "^0.11.2"
 
 [tool.ruff]
-line-length = 79
+line-length = 100
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["D", "PLR2004", "FBT001"]
+ignore = ["D", "PLR2004", "FBT001", "COM812"]
 fixable = ["ALL"]
 # unfixable = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+docstring-code-format = true
