@@ -1,9 +1,8 @@
 import click
 import matplotlib.pyplot as plt
-import numpy as np
-from PIL import Image
 
 from . import __version__
+from .io import load_image, save_image
 from .methods import (
     bilinear_interpolation,
     l2_optimal_interpolation,
@@ -32,7 +31,7 @@ def main(
         click.secho(f"Scaling factor {scale}")
         click.secho(f"Save image? {'yes' if save else 'no'}")
 
-    image = np.array(Image.open(file))
+    image = load_image(file)
     grey_scale = image.ndim == 2
 
     match method:
@@ -51,8 +50,8 @@ def main(
 
     if save:
         out_name = str(file.name).split("/")[-1].split(".")[0]
-        Image.fromarray(out_image).save(f"output/{out_name}_int.png")
-        click.secho(f"Image {out_name} has been saved to ./output/", fg="green")
+        save_image(out_image, f"examples/output/{out_name}_interp.png")
+        click.secho(f"Image {out_name} has been saved to examples/output/", fg="green")
 
     fig, axes = plt.subplots(1, 2, figsize=(16, 8))
 
@@ -86,5 +85,5 @@ def list_methods() -> None:
 
 if __name__ == "__main__":
     click.echo(
-        "Use 'poetry run example' to print example or 'poetry run interpolate' to upscale image.",
+        "Use 'poetry run example' to print example or 'poetry run upscale' to upscale image.",
     )

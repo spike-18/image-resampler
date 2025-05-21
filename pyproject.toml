@@ -18,7 +18,10 @@ dependencies = [
 
 [project.scripts]
 example = "supreme_bassoon.visualize:example"
-interpolate = "supreme_bassoon.__main__:main"
+upscale = "supreme_bassoon.__main__:main"
+benchmark = "supreme_bassoon.benchmark:benchmark"
+gui = "supreme_bassoon.gui:startApp"
+
 
 
 [build-system]
@@ -27,6 +30,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.11.2"
+pytest = "^8.3.5"
 
 [tool.ruff]
 line-length = 100
