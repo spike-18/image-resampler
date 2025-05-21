@@ -12,6 +12,11 @@ from .methods import (
 
 @click.command()
 def example() -> None:
+    """    Runs a visual comparison of interpolation methods.
+
+    Loads a standard test image, applies each interpolation method with a scale factor of 2,
+    and displays the results side by side for visual inspection.
+    """
     click.secho("Example comparison between interpolation methods is loaded.", fg="green")
 
     image = data.camera()  # shape: (512, 512)

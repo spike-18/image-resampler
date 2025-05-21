@@ -1,8 +1,9 @@
-import sys
 import tkinter as tk
 from tkinter import filedialog, messagebox
+
 import numpy as np
 from PIL import Image, ImageTk
+
 from .io import load_image, save_image
 from .methods import (
     bilinear_interpolation,
@@ -11,8 +12,9 @@ from .methods import (
     piecewise_linear_interpolation,
 )
 
+
 class UpscaleApp(tk.Tk):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.title("Image Upscaling App")
         self.geometry("800x600")
@@ -20,7 +22,7 @@ class UpscaleApp(tk.Tk):
         self.out_image = None
         self.create_widgets()
 
-    def create_widgets(self):
+    def create_widgets(self) -> None:
         # Use a modern font and color scheme
         font = ("Segoe UI", 11)
         bg = "#222831"
@@ -39,16 +41,25 @@ class UpscaleApp(tk.Tk):
         control_frame.pack(side=tk.LEFT, fill=tk.Y)
 
         self.open_btn = tk.Button(
-            control_frame, text="Open Image", width=20, font=font, bg=btn_bg, fg=btn_fg,
-            command=self.open_image
+            control_frame,
+            text="Open Image",
+            width=20,
+            font=font,
+            bg=btn_bg,
+            fg=btn_fg,
+            command=self.open_image,
         )
         self.open_btn.pack(pady=(0, 16))
 
         tk.Label(control_frame, text="Method:", anchor="w", font=font, bg=bg, fg=fg).pack(fill=tk.X)
         self.method_var = tk.StringVar(value="Bilinear")
         method_menu = tk.OptionMenu(
-            control_frame, self.method_var,
-            "Nearest Neighbor", "Bilinear", "Piecewise Linear", "L2 Optimal"
+            control_frame,
+            self.method_var,
+            "Nearest Neighbor",
+            "Bilinear",
+            "Piecewise Linear",
+            "L2 Optimal",
         )
         method_menu.config(width=18, font=font, bg=btn_bg, fg=btn_fg, highlightthickness=0)
         method_menu.pack(pady=(0, 16))
@@ -56,20 +67,34 @@ class UpscaleApp(tk.Tk):
         tk.Label(control_frame, text="Scale:", anchor="w", font=font, bg=bg, fg=fg).pack(fill=tk.X)
         self.scale_var = tk.IntVar(value=2)
         scale_entry = tk.Entry(
-            control_frame, textvariable=self.scale_var, width=20, font=font,
-            bg=entry_bg, fg=entry_fg
+            control_frame,
+            textvariable=self.scale_var,
+            width=20,
+            font=font,
+            bg=entry_bg,
+            fg=entry_fg,
         )
         scale_entry.pack(pady=(0, 16))
 
         self.upscale_btn = tk.Button(
-            control_frame, text="Upscale", width=20, font=font, bg=btn_bg, fg=btn_fg,
-            command=self.upscale
+            control_frame,
+            text="Upscale",
+            width=20,
+            font=font,
+            bg=btn_bg,
+            fg=btn_fg,
+            command=self.upscale,
         )
         self.upscale_btn.pack(pady=(0, 16))
 
         self.save_btn = tk.Button(
-            control_frame, text="Save Result", width=20, font=font, bg=btn_bg, fg=btn_fg,
-            command=self.save_result
+            control_frame,
+            text="Save Result",
+            width=20,
+            font=font,
+            bg=btn_bg,
+            fg=btn_fg,
+            command=self.save_result,
         )
         self.save_btn.pack(pady=(0, 16))
 
@@ -77,16 +102,20 @@ class UpscaleApp(tk.Tk):
         image_frame = tk.Frame(self, padx=10, pady=10, bg=bg)
         image_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        self.img_label = tk.Label(
-            image_frame, bg=bg, relief=tk.SUNKEN, borderwidth=2
-        )
+        self.img_label = tk.Label(image_frame, bg=bg, relief=tk.SUNKEN, borderwidth=2)
         self.img_label.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
 
         # Status bar
         self.status_var = tk.StringVar(value="Welcome to Image Upscaling App!")
         status_bar = tk.Label(
-            self, textvariable=self.status_var, bd=1, relief=tk.SUNKEN, anchor=tk.W,
-            font=("Segoe UI", 10), bg=status_bg, fg=status_fg
+            self,
+            textvariable=self.status_var,
+            bd=1,
+            relief=tk.SUNKEN,
+            anchor=tk.W,
+            font=("Segoe UI", 10),
+            bg=status_bg,
+            fg=status_fg,
         )
         status_bar.pack(side=tk.BOTTOM, fill=tk.X)
 
@@ -133,11 +162,6 @@ class UpscaleApp(tk.Tk):
         self.img_label.config(image=imgtk)
 
 
-def startApp():
+if __name__ == "__main__":
     app = UpscaleApp()
     app.mainloop()
-
-
-if __name__ == "__main__":
-    startApp()
-

@@ -14,10 +14,16 @@ from .methods import (
 @click.command()
 @click.version_option(version=__version__)
 @click.argument("file", type=click.File(mode="rb"))
-@click.option("-m", "--method", default="nn", help="method to use for interpolation")
-@click.option("-s", "--scale", type=int, default=2, help="scaling factor")
-@click.option("-v", "--verbose", is_flag=True, default=False, help="print interpolation parameters")
-@click.option("--save", is_flag=True, default=False, help="save interpolated image")
+@click.option("-m", "--method", default="nn", help="Method to use for interpolation. [nn|bl|pw|l2]")
+@click.option("-s", "--scale", type=int, default=2, help="Scaling factor.")
+@click.option(
+    "-v", "--verbose", is_flag=True, default=False,
+    help="Print interpolation parameters."
+)
+@click.option(
+    "--save", is_flag=True, default=False,
+    help="Save interpolated image to examples/output/."
+)
 def main(
     file: click.File,
     method: str,
@@ -25,6 +31,11 @@ def main(
     save: bool,
     verbose: bool,
 ) -> int | None:
+    """Upscales an input image using the selected method.
+
+    After that displays the result.
+    Optionally saves the upscaled image to examples/output/ as <filename>_interp.png.
+    """
     if verbose:
         click.secho(f"Interpolation method: {method}")
         click.secho(f"Filename: {file.name}")
@@ -55,6 +66,7 @@ def main(
 
     fig, axes = plt.subplots(1, 2, figsize=(16, 8))
 
+    # Show original and upscaled images side by side
     if grey_scale:
         axes[0].imshow(image, cmap="gray")
         axes[1].imshow(out_image, cmap="gray")

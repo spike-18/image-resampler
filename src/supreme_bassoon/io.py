@@ -1,4 +1,5 @@
 from typing import IO
+
 import numpy as np
 from PIL import Image
 

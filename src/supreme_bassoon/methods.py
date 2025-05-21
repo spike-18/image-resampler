@@ -4,9 +4,9 @@ from numpy.fft import fft2, fftshift, ifft2, ifftshift
 
 def nearest_neighbor(
     image: np.ndarray,
-    scale=1.0,
-    output_dtype=None,
-    clip=False,
+    clip : bool,
+    scale : float = 1.0,
+    output_dtype: np.dtype | None = None,
 ) -> np.ndarray:
     """
     Nearest neighbor interpolation for upscaling images.
@@ -43,7 +43,11 @@ def nearest_neighbor(
             out_image[i, j] = image[src_i, src_j]
 
     if clip:
-        info = np.iinfo(image.dtype) if np.issubdtype(image.dtype, np.integer) else np.finfo(image.dtype)
+        info = (
+            np.iinfo(image.dtype)
+            if np.issubdtype(image.dtype, np.integer)
+            else np.finfo(image.dtype)
+        )
         out_image = np.clip(out_image, info.min, info.max)
 
     return out_image
