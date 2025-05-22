@@ -20,8 +20,8 @@ Thumbs.db
 /.pytest_cache/
 
 # Ignore output and generated images
-output/
-examples/output/
+# output/
+examples/output/*
 
 # Allow only source, docs, tests, and config files
 !src/
