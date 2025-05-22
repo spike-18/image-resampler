@@ -2,7 +2,7 @@ import click
 
 from .__main__ import main as upscale
 from .benchmark import benchmark
-from .gui import UpscaleApp
+from .gui import rungui
 from .visualize import example
 
 
@@ -19,8 +19,7 @@ cli.add_command(upscale, name="upscale")
 @click.command()
 def gui() -> None:
     """Launch the graphical user interface."""
-    app = UpscaleApp()
-    app.mainloop()
+    rungui()
 
 
 cli.add_command(gui, name="gui")

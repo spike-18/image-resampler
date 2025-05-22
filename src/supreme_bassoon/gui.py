@@ -14,6 +14,17 @@ from .methods import (
 
 
 class UpscaleApp(tk.Tk):
+    """
+    Tkinter-based GUI application for interactive image upscaling.
+
+    Features:
+        - Load an image from disk
+        - Select upscaling method and scale
+        - Preview upscaled result
+        - Save upscaled image
+        - Modern, user-friendly interface
+    """
+
     def __init__(self) -> None:
         super().__init__()
         self.title("Image Upscaling App")
@@ -162,6 +173,6 @@ class UpscaleApp(tk.Tk):
         self.img_label.config(image=imgtk)
 
 
-if __name__ == "__main__":
+def rungui() -> None:
     app = UpscaleApp()
     app.mainloop()

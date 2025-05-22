@@ -14,7 +14,7 @@ from .metrics import compute_mse, compute_psnr, compute_ssim
 
 
 @click.command()
-@click.argument("input", type=click.Path(exists=True))
+@click.argument("input1", type=click.Path(exists=True))
 @click.option("-s", "--scale", type=int, default=2, help="Scaling factor.")
 def benchmark(input1, scale) -> None:
     """Benchmark all interpolation methods on a single image.

@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 import numpy as np
@@ -9,7 +8,7 @@ from supreme_bassoon.io import load_image, save_image
 
 def test_load_image_and_save_image(tmp_path) -> None:
     # Create a dummy image and save it
-    arr = (np.random.Generator(10, 10, 3) * 255).astype(np.uint8)
+    arr = np.random.default_rng().integers(0, 255, (10, 10, 3), dtype=np.uint8)
     file_path = tmp_path / "test_img.png"
     Image.fromarray(arr).save(file_path)
     # Test load_image
@@ -23,7 +22,7 @@ def test_load_image_and_save_image(tmp_path) -> None:
 
 
 def test_load_image_filelike(tmp_path) -> None:
-    arr = (np.random.Generator(8, 8) * 255).astype(np.uint8)
+    arr = np.random.default_rng().integers(0, 255, (8, 8, 3), dtype=np.uint8)
     file_path = tmp_path / "test_img2.png"
     Image.fromarray(arr).save(file_path)
     with Path.open(file_path, "rb") as f:
