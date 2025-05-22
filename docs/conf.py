@@ -63,12 +63,6 @@ html_css_files = [
     "custom.css",
 ]
 
-# # Favicon
-# html_favicon = '_static/favicon.ico'
-
-# # Logo
-# html_logo = '_static/logo.png'
-
 # -- Additional settings ------------------------------------------------------
 # Enable numbered figures
 numfig = True

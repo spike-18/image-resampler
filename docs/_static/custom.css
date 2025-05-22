@@ -9,15 +9,120 @@ div.highlight {
   margin: 1em 0;
 }
 
-/* API documentation styling */
+/* Make code blocks use a dark background and light text, but match Furo's style */
+div.highlight pre, pre.literal-block, .highlight pre {
+    background: var(--color-background-secondary, #343850) !important;
+    color: var(--color-foreground-primary, #f8f8f2) !important;
+    border-radius: 6px;
+    padding: 1em;
+    font-size: 1em;
+    box-shadow: none;
+    border: none;
+}
+
+/* Improve inline code for Furo dark mode */
+code, .rst-content code.literal {
+    background: var(--color-background-secondary, #282a36) !important;
+    color: var(--color-foreground-primary, #f8f8f2) !important;
+    border-radius: 4px;
+    padding: 0.1em 0.3em;
+    font-size: 1em;
+}
+
+/* API documentation styling: match Furo's card style */
 dl.py {
-  background: #f8f9fa;
+  background: var(--color-background-primary, #23272e);
+  color: var(--color-foreground-primary, #f8f8f2);
   padding: 1em;
   border-radius: 4px;
+  box-shadow: none;
+  border: 1px solid var(--color-background-border, #44475a);
 }
 
 /* Better parameter formatting */
 dl.field-list > dt {
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--color-foreground-secondary, #8be9fd);
+}
+
+/* Make admonitions and notes more visually appealing */
+div.admonition {
+    border-radius: 6px;
+    padding: 0.8em;
+    background: var(--color-background-secondary, #23272e);
+    color: var(--color-foreground-primary, #f8f8f2);
+    border-left: 4px solid var(--color-foreground-secondary, #8be9fd);
+}
+
+/* Improve table appearance */
+table.docutils {
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--color-background-primary, #23272e);
+    color: var(--color-foreground-primary, #f8f8f2);
+}
+
+/* Optional: tweak link color for better contrast on dark backgrounds */
+a {
+    color: var(--color-link, #8be9fd);
+}
+
+/* Fix for Furo dark mode: ensure all code blocks and API docs are readable */
+html[data-theme="dark"] div.highlight pre,
+html[data-theme="dark"] pre.literal-block,
+html[data-theme="dark"] .highlight pre,
+html[data-theme="dark"] code,
+html[data-theme="dark"] .rst-content code.literal {
+    background: #23272e !important;
+    color: #f8f8f2 !important;
+}
+
+html[data-theme="dark"] dl.py {
+    background: #23272e;
+    color: #f8f8f2;
+    border: 1px solid #44475a;
+}
+
+html[data-theme="dark"] div.admonition {
+    background: #23272e;
+    color: #f8f8f2;
+    border-left: 4px solid #8be9fd;
+}
+
+html[data-theme="dark"] table.docutils {
+    background: #23272e;
+    color: #f8f8f2;
+}
+
+/* Fix for Furo light mode: ensure code blocks are readable */
+html[data-theme="light"] div.highlight pre,
+html[data-theme="light"] pre.literal-block,
+html[data-theme="light"] .highlight pre,
+html[data-theme="light"] code,
+html[data-theme="light"] .rst-content code.literal {
+    background: #f5f5f5 !important;
+    color: #23272e !important;
+}
+
+html[data-theme="light"] dl.py {
+    background: #f8f9fa;
+    color: #23272e;
+    border: 1px solid #e0e0e0;
+}
+
+html[data-theme="light"] div.admonition {
+    background: #f8f9fa;
+    color: #23272e;
+    border-left: 4px solid #007acc;
+}
+
+html[data-theme="light"] table.docutils {
+    background: #f8f9fa;
+    color: #23272e;
+}
+
+/* Remove unwanted box shadows and borders from Furo */
+div.highlight, pre.literal-block, .highlight pre, dl.py, div.admonition, table.docutils {
+    box-shadow: none !important;
+    border: none !important;
 }
