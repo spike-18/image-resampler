@@ -23,7 +23,7 @@ def nearest_neighbor(
         out_image = np.empty((out_h, out_w, image.shape[2]), dtype=output_dtype)
     else:
         out_image = np.empty((out_h, out_w), dtype=output_dtype)
-    # Vectorized index calculation
+
     row_idx = np.clip(np.round(np.arange(out_h) / h_scale).astype(int), 0, in_h - 1)
     col_idx = np.clip(np.round(np.arange(out_w) / w_scale).astype(int), 0, in_w - 1)
     if image.ndim == 3:
@@ -51,7 +51,7 @@ def bilinear_interpolation(image: np.ndarray, scale=1.0) -> np.ndarray:
         h_scale, w_scale = scale
     in_h, in_w = image.shape[:2]
     out_h, out_w = int(np.round(in_h * h_scale)), int(np.round(in_w * w_scale))
-    # Generate grid of coordinates in output image
+
     x = np.arange(out_h) / h_scale
     y = np.arange(out_w) / w_scale
     x0 = np.floor(x).astype(int)

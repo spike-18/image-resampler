@@ -47,74 +47,129 @@ class UpscaleApp(tk.Tk):
 
         self.configure(bg=bg)
 
-        # Frame for controls
-        control_frame = tk.Frame(self, padx=18, pady=18, bg=bg)
-        control_frame.pack(side=tk.LEFT, fill=tk.Y)
+        # Top control panel
+        control_frame = tk.Frame(self, bg=bg, padx=10, pady=5)
+        control_frame.pack(side=tk.TOP, fill=tk.X)
+
+        # Left side controls
+        left_controls = tk.Frame(control_frame, bg=bg)
+        left_controls.pack(side=tk.LEFT, padx=5)
 
         self.open_btn = tk.Button(
-            control_frame,
+            left_controls,
             text="Open Image",
-            width=20,
+            width=15,
             font=font,
             bg=btn_bg,
             fg=btn_fg,
             command=self.open_image,
         )
-        self.open_btn.pack(pady=(0, 16))
+        self.open_btn.pack(side=tk.LEFT, padx=5)
 
-        tk.Label(control_frame, text="Method:", anchor="w", font=font, bg=bg, fg=fg).pack(fill=tk.X)
+        # Center controls
+        center_controls = tk.Frame(control_frame, bg=bg)
+        center_controls.pack(side=tk.LEFT, padx=5)
+
+        method_frame = tk.Frame(center_controls, bg=bg)
+        method_frame.pack(side=tk.LEFT, padx=5)
+        tk.Label(method_frame, text="Method:", font=font, bg=bg, fg=fg).pack(side=tk.LEFT)
         self.method_var = tk.StringVar(value="Bilinear")
         method_menu = tk.OptionMenu(
-            control_frame,
+            method_frame,
             self.method_var,
             "Nearest Neighbor",
             "Bilinear",
             "Piecewise Linear",
             "L2 Optimal",
         )
-        method_menu.config(width=18, font=font, bg=btn_bg, fg=btn_fg, highlightthickness=0)
-        method_menu.pack(pady=(0, 16))
+        method_menu.config(font=font, bg=btn_bg, fg=btn_fg, highlightthickness=0)
+        method_menu.pack(side=tk.LEFT, padx=5)
 
-        tk.Label(control_frame, text="Scale:", anchor="w", font=font, bg=bg, fg=fg).pack(fill=tk.X)
+        scale_frame = tk.Frame(center_controls, bg=bg)
+        scale_frame.pack(side=tk.LEFT, padx=5)
+        tk.Label(scale_frame, text="Scale:", font=font, bg=bg, fg=fg).pack(side=tk.LEFT)
         self.scale_var = tk.IntVar(value=2)
         scale_entry = tk.Entry(
-            control_frame,
+            scale_frame,
             textvariable=self.scale_var,
-            width=20,
+            width=5,
             font=font,
             bg=entry_bg,
             fg=entry_fg,
         )
-        scale_entry.pack(pady=(0, 16))
+        scale_entry.pack(side=tk.LEFT, padx=5)
+
+        # Right side controls
+        right_controls = tk.Frame(control_frame, bg=bg)
+        right_controls.pack(side=tk.RIGHT, padx=5)
 
         self.upscale_btn = tk.Button(
-            control_frame,
+            right_controls,
             text="Upscale",
-            width=20,
+            width=10,
             font=font,
             bg=btn_bg,
             fg=btn_fg,
             command=self.upscale,
         )
-        self.upscale_btn.pack(pady=(0, 16))
+        self.upscale_btn.pack(side=tk.LEFT, padx=5)
 
         self.save_btn = tk.Button(
-            control_frame,
+            right_controls,
             text="Save Result",
-            width=20,
+            width=10,
             font=font,
             bg=btn_bg,
             fg=btn_fg,
             command=self.save_result,
         )
-        self.save_btn.pack(pady=(0, 16))
+        self.save_btn.pack(side=tk.LEFT, padx=5)
 
-        # Frame for image display
-        image_frame = tk.Frame(self, padx=10, pady=10, bg=bg)
-        image_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        # Images container
+        images_frame = tk.Frame(self, bg=bg)
+        images_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=10, pady=5)
 
-        self.img_label = tk.Label(image_frame, bg=bg, relief=tk.SUNKEN, borderwidth=2)
-        self.img_label.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
+        # Add a zoom slider above the images
+        zoom_frame = tk.Frame(images_frame, bg=bg)
+        zoom_frame.pack(side=tk.TOP, fill=tk.X, pady=(0, 10))
+        tk.Label(
+            zoom_frame,
+            text="Zoom:",
+            font=font,
+            bg=bg,
+            fg=fg,
+        ).pack(side=tk.LEFT)
+        self.zoom_var = tk.DoubleVar(value=1.0)
+        zoom_slider = tk.Scale(
+            zoom_frame,
+            from_=1.0,
+            to=16.0,
+            resolution=0.1,
+            orient=tk.HORIZONTAL,
+            variable=self.zoom_var,
+            length=300,
+            showvalue=True,
+            bg=bg,
+            fg=fg,
+            troughcolor=btn_bg,
+            highlightthickness=0,
+            command=lambda _: self.update_images_zoom(),
+        )
+        zoom_slider.pack(side=tk.LEFT, padx=10)
+
+        # Original image frame
+        original_frame = tk.Frame(images_frame, bg=bg)
+        original_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5)
+        tk.Label(original_frame, text="Original", font=font, bg=bg, fg=fg).pack()
+        self.original_label = tk.Label(original_frame, bg=bg, relief=tk.SUNKEN, borderwidth=2)
+        self.original_label.pack(fill=tk.BOTH, expand=True, pady=5)
+
+        # Result image frame
+        result_frame = tk.Frame(images_frame, bg=bg)
+        result_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5)
+        tk.Label(result_frame, text="Upscaled", font=font, bg=bg, fg=fg).pack()
+        self.result_label = tk.Label(result_frame, bg=bg, relief=tk.SUNKEN, borderwidth=2)
+        self.result_label.pack(fill=tk.BOTH, expand=True, pady=5)
 
         # Status bar
         self.status_var = tk.StringVar(value="Welcome to Image Upscaling App!")
@@ -134,8 +189,49 @@ class UpscaleApp(tk.Tk):
         path = filedialog.askopenfilename()
         if path:
             self.image = load_image(path)
-            self.display_image(self.image)
+            self.display_original(self.image)
             self.status_var.set(f"Loaded: {path}")
+
+    def _update_label_image(self, label, img_arr, zoom=1.0, scale_factor=1.0) -> None:
+        if img_arr is None:
+            return
+        # Fixed display area
+        display_w, display_h = 400, 400
+        img = Image.fromarray(img_arr)
+        w, h = img.size
+        # Adjust zoom for upscaled image so it appears smaller by scale_factor initially
+        effective_zoom = zoom / scale_factor if scale_factor != 1.0 else zoom
+        new_w, new_h = max(1, int(w * effective_zoom)), max(1, int(h * effective_zoom))
+        img = img.resize((new_w, new_h), Image.NEAREST)
+        # Center crop to display area
+        left = max(0, (new_w - display_w) // 2)
+        upper = max(0, (new_h - display_h) // 2)
+        right = left + display_w
+        lower = upper + display_h
+        img = img.crop((left, upper, right, lower))
+        imgtk = ImageTk.PhotoImage(img)
+        label.imgtk = imgtk
+        label.config(image=imgtk, width=display_w, height=display_h)
+
+    def display_original(self, img_arr: np.ndarray) -> None:
+        self._original_img_arr = img_arr.copy() if img_arr is not None else None
+        self._update_label_image(self.original_label, img_arr)
+
+    def display_result(self, img_arr: np.ndarray) -> None:
+        self._result_img_arr = img_arr.copy() if img_arr is not None else None
+        # Use the current scale factor for initial display
+        scale = self.scale_var.get() if hasattr(self, "scale_var") else 1.0
+        self._update_label_image(self.result_label, img_arr, scale_factor=scale)
+
+    def update_images_zoom(self) -> None:
+        zoom = self.zoom_var.get() if hasattr(self, "zoom_var") else 1.0
+        scale = self.scale_var.get() if hasattr(self, "scale_var") else 1.0
+        if hasattr(self, "_original_img_arr") and self._original_img_arr is not None:
+            self._update_label_image(self.original_label, self._original_img_arr, zoom)
+        if hasattr(self, "_result_img_arr") and self._result_img_arr is not None:
+            self._update_label_image(
+                self.result_label, self._result_img_arr, zoom, scale_factor=scale
+            )
 
     def upscale(self) -> None:
         if self.image is None:
@@ -154,7 +250,7 @@ class UpscaleApp(tk.Tk):
                 self.out_image = piecewise_linear_interpolation(self.image, scale)
             case "L2 Optimal":
                 self.out_image = l2_optimal_interpolation(self.image, scale)
-        self.display_image(self.out_image)
+        self.display_result(self.out_image)
         self.status_var.set(f"Upscaled using {method} (scale={scale})")
 
     def save_result(self) -> None:
@@ -164,13 +260,6 @@ class UpscaleApp(tk.Tk):
                 save_image(self.out_image, path)
                 messagebox.showinfo("Saved", f"Image saved to {path}")
                 self.status_var.set(f"Saved: {path}")
-
-    def display_image(self, img_arr: np.ndarray) -> None:
-        img = Image.fromarray(img_arr)
-        img.thumbnail((500, 500))
-        imgtk = ImageTk.PhotoImage(img)
-        self.img_label.imgtk = imgtk
-        self.img_label.config(image=imgtk)
 
 
 def rungui() -> None:

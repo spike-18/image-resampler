@@ -11,13 +11,17 @@ def test_gui_instantiates(monkeypatch) -> None:
     assert hasattr(app, "open_image")
     assert hasattr(app, "upscale")
     assert hasattr(app, "save_result")
-    assert hasattr(app, "display_image")
+    assert hasattr(app, "display_original")
+    assert hasattr(app, "display_result")
+    assert hasattr(app, "update_images_zoom")
+    assert hasattr(app, "_update_label_image")
 
 
 def test_gui_methods(monkeypatch) -> None:
     # Patch methods to avoid side effects
     app = UpscaleApp()
-    monkeypatch.setattr(app, "display_image", lambda *_a, **_k: None)
+    monkeypatch.setattr(app, "display_original", lambda *_a, **_k: None)
+    monkeypatch.setattr(app, "display_result", lambda *_a, **_k: None)
     app.image = None
     app.out_image = None
     # open_image should not fail if no file is selected
@@ -34,7 +38,8 @@ def test_gui_all_buttons(monkeypatch) -> None:
     monkeypatch.setattr("tkinter.filedialog.asksaveasfilename", lambda *_a, **_k: "")
     monkeypatch.setattr("tkinter.messagebox.showinfo", lambda *_a, **_k: None)
     monkeypatch.setattr("tkinter.messagebox.showerror", lambda *_a, **_k: None)
-    monkeypatch.setattr(app, "display_image", lambda *_a, **_k: None)
+    monkeypatch.setattr(app, "display_original", lambda *_a, **_k: None)
+    monkeypatch.setattr(app, "display_result", lambda *_a, **_k: None)
     # Simulate button presses
     app.open_image()  # Should handle no file
     app.upscale()  # Should handle no image
@@ -56,7 +61,8 @@ def test_gui_menu(monkeypatch) -> None:
     monkeypatch.setattr("tkinter.filedialog.asksaveasfilename", lambda *_a, **_k: "")
     monkeypatch.setattr("tkinter.messagebox.showinfo", lambda *_a, **_k: None)
     monkeypatch.setattr("tkinter.messagebox.showerror", lambda *_a, **_k: None)
-    monkeypatch.setattr(app, "display_image", lambda *_a, **_k: None)
+    monkeypatch.setattr(app, "display_original", lambda *_a, **_k: None)
+    monkeypatch.setattr(app, "display_result", lambda *_a, **_k: None)
     # Simulate menu actions if present
     if hasattr(app, "menubar"):
         for menu in app.menubar.winfo_children():
@@ -81,7 +87,8 @@ def test_gui_upscale_with_method(monkeypatch) -> None:
     monkeypatch.setattr("tkinter.filedialog.asksaveasfilename", lambda *_a, **_k: "")
     monkeypatch.setattr("tkinter.messagebox.showinfo", lambda *_a, **_k: None)
     monkeypatch.setattr("tkinter.messagebox.showerror", lambda *_a, **_k: None)
-    monkeypatch.setattr(app, "display_image", lambda *_a, **_k: None)
+    monkeypatch.setattr(app, "display_original", lambda *_a, **_k: None)
+    monkeypatch.setattr(app, "display_result", lambda *_a, **_k: None)
     import numpy as np
 
     app.image = np.zeros((8, 8), dtype=np.uint8)
