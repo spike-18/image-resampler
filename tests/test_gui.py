@@ -4,7 +4,6 @@ from supreme_bassoon.gui import UpscaleApp
 
 
 def test_gui_instantiates(monkeypatch) -> None:
-    # Patch Tkinter mainloop to avoid opening a window
     monkeypatch.setattr(UpscaleApp, "mainloop", lambda *_a, **_k: None)
     app = UpscaleApp()
     assert hasattr(app, "create_widgets")
@@ -18,7 +17,6 @@ def test_gui_instantiates(monkeypatch) -> None:
 
 
 def test_gui_methods(monkeypatch) -> None:
-    # Patch methods to avoid side effects
     app = UpscaleApp()
     monkeypatch.setattr(app, "display_original", lambda *_a, **_k: None)
     monkeypatch.setattr(app, "display_result", lambda *_a, **_k: None)
@@ -33,14 +31,12 @@ def test_gui_methods(monkeypatch) -> None:
 
 def test_gui_all_buttons(monkeypatch) -> None:
     app = UpscaleApp()
-    # Patch all file dialogs and messageboxes with generic lambdas that accept any args
     monkeypatch.setattr("tkinter.filedialog.askopenfilename", lambda *_a, **_k: "")
     monkeypatch.setattr("tkinter.filedialog.asksaveasfilename", lambda *_a, **_k: "")
     monkeypatch.setattr("tkinter.messagebox.showinfo", lambda *_a, **_k: None)
     monkeypatch.setattr("tkinter.messagebox.showerror", lambda *_a, **_k: None)
     monkeypatch.setattr(app, "display_original", lambda *_a, **_k: None)
     monkeypatch.setattr(app, "display_result", lambda *_a, **_k: None)
-    # Simulate button presses
     app.open_image()  # Should handle no file
     app.upscale()  # Should handle no image
     app.save_result()  # Should handle no out_image
@@ -56,29 +52,22 @@ def test_gui_all_buttons(monkeypatch) -> None:
 
 def test_gui_menu(monkeypatch) -> None:
     app = UpscaleApp()
-    # Patch all file dialogs and messageboxes
     monkeypatch.setattr("tkinter.filedialog.askopenfilename", lambda *_a, **_k: "")
     monkeypatch.setattr("tkinter.filedialog.asksaveasfilename", lambda *_a, **_k: "")
     monkeypatch.setattr("tkinter.messagebox.showinfo", lambda *_a, **_k: None)
     monkeypatch.setattr("tkinter.messagebox.showerror", lambda *_a, **_k: None)
     monkeypatch.setattr(app, "display_original", lambda *_a, **_k: None)
     monkeypatch.setattr(app, "display_result", lambda *_a, **_k: None)
-    # Simulate menu actions if present
     if hasattr(app, "menubar"):
         for menu in app.menubar.winfo_children():
             with contextlib.suppress(Exception):
                 menu.invoke(0)
-    # Simulate method/scale changes if present
     if hasattr(app, "method_var"):
         app.method_var.set("Bilinear")
     if hasattr(app, "scale_var"):
         app.scale_var.set(2)
-    # Simulate window close if present
     if hasattr(app, "destroy"):
         app.destroy()
-
-
-# Additional tests for coverage of gui.py
 
 
 def test_gui_upscale_with_method(monkeypatch) -> None:

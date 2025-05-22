@@ -64,7 +64,6 @@ def main(
 
     fig, axes = plt.subplots(1, 2, figsize=(16, 8))
 
-    # Show original and upscaled images side by side
     if grey_scale:
         axes[0].imshow(image, cmap="gray")
         axes[1].imshow(out_image, cmap="gray")

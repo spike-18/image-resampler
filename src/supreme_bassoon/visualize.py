@@ -23,7 +23,6 @@ def example() -> None:
     image = data.camera()  # shape: (512, 512)
     scale = 2
 
-    # Downscale and then upscale to make pixelation visible
     downscale_factor = 8
     small = image[::downscale_factor, ::downscale_factor]
 
@@ -33,7 +32,6 @@ def example() -> None:
     piecewise_image = piecewise_linear_interpolation(small, scale * downscale_factor)
     l2_image = l2_optimal_interpolation(small, scale * downscale_factor)
 
-    # Arrange outputs in two rows for better visibility
     fig, axes = plt.subplots(2, 3, figsize=(18, 10))
     axes = axes.flatten()
 

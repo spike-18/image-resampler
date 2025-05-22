@@ -33,7 +33,7 @@ class UpscaleApp(tk.Tk):
         self.out_image = None
         self.create_widgets()
 
-    def create_widgets(self) -> None:
+    def create_widgets(self) -> None:  # noqa: PLR0915
         # Use a modern font and color scheme
         font = ("Segoe UI", 11)
         bg = "#222831"

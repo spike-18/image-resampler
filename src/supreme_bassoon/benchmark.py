@@ -14,14 +14,14 @@ from .metrics import compute_mse, compute_psnr, compute_ssim
 
 
 @click.command()
-@click.argument("input1", type=click.Path(exists=True))
+@click.argument("input", type=click.Path(exists=True))
 @click.option("-s", "--scale", type=int, default=2, help="Scaling factor.")
-def benchmark(input1, scale) -> None:
+def benchmark(input, scale) -> None:  # noqa: A002
     """Benchmark all interpolation methods on a single image.
 
     Downscales the image, then upscales it back and compares to the original.
     """
-    original = load_image(input1)
+    original = load_image(input)
     # Downscale the image
     down_shape = (original.shape[0] // scale, original.shape[1] // scale)
     if original.ndim == 3:
@@ -40,7 +40,7 @@ def benchmark(input1, scale) -> None:
         start = time.time()
         upscaled = func(low_res, scale)
         elapsed = time.time() - start
-        # Ensure upscaled and original are the same shape
+        # Check shape
         if upscaled.shape != original.shape:
             upscaled = resize(
                 upscaled, original.shape, anti_aliasing=True, preserve_range=True
