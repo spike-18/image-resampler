@@ -1,5 +1,5 @@
-from click.testing import CliRunner
 import numpy as np
+from click.testing import CliRunner
 
 from supreme_bassoon import benchmark
 
@@ -28,7 +28,7 @@ def test_benchmark_runs(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr(benchmark, "compute_ssim", lambda *_: 1)
     monkeypatch.setattr(benchmark, "compute_mse", lambda *_: 1)
     # Patch resize to identity
-    monkeypatch.setattr(benchmark, "resize", lambda arr, *a, **k: arr)
+    monkeypatch.setattr(benchmark, "resize", lambda arr, *a, **k: arr)  # noqa: ARG005
     runner = CliRunner()
     result = runner.invoke(benchmark.benchmark, [str(img_path)])
     assert result.exit_code == 0
@@ -48,15 +48,15 @@ def test_benchmark_metrics_called(monkeypatch, tmp_path) -> None:
 
     called = {"psnr": 0, "ssim": 0, "mse": 0}
 
-    def fake_metric(*args: object, **kwargs: object) -> float:
+    def fake_metric(*args: object, **kwargs: object) -> float:  # noqa: ARG001
         called["psnr"] += 1
         return 42.0
 
-    def fake_ssim(*args: object, **kwargs: object) -> float:
+    def fake_ssim(*args: object, **kwargs: object) -> float:  # noqa: ARG001
         called["ssim"] += 1
         return 0.9
 
-    def fake_mse(*args: object, **kwargs: object) -> float:
+    def fake_mse(*args: object, **kwargs: object) -> float:  # noqa: ARG001
         called["mse"] += 1
         return 1.0
 
@@ -67,7 +67,7 @@ def test_benchmark_metrics_called(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr(benchmark, "bilinear_interpolation", lambda arr, _: arr)
     monkeypatch.setattr(benchmark, "piecewise_linear_interpolation", lambda arr, _: arr)
     monkeypatch.setattr(benchmark, "l2_optimal_interpolation", lambda arr, _: arr)
-    monkeypatch.setattr(benchmark, "resize", lambda arr, *a, **k: arr)
+    monkeypatch.setattr(benchmark, "resize", lambda arr, *a, **k: arr)  # noqa: ARG005
     runner = CliRunner()
     result = runner.invoke(benchmark.benchmark, [str(img_path)])
     assert result.exit_code == 0
@@ -99,7 +99,7 @@ def test_benchmark_downscale(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr(benchmark, "compute_ssim", lambda *_: 1)
     monkeypatch.setattr(benchmark, "compute_mse", lambda *_: 1)
     monkeypatch.setattr(
-        benchmark, "resize", lambda arr, shape, *a, **k: arr[: shape[0], : shape[1]]
+        benchmark, "resize", lambda arr, shape, *a, **k: arr[: shape[0], : shape[1]]  # noqa: ARG005
     )
     runner = CliRunner()
     result = runner.invoke(benchmark.benchmark, [str(img_path), "--scale", "2"])

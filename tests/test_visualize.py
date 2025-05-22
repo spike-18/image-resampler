@@ -1,4 +1,5 @@
 import pytest
+
 from supreme_bassoon.visualize import example
 
 

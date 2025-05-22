@@ -1,9 +1,11 @@
 import numpy as np
 from skimage.metrics import mean_squared_error, peak_signal_noise_ratio, structural_similarity
 
+
 def compute_psnr(img1: np.ndarray, img2: np.ndarray) -> float:
     if img1.shape != img2.shape:
-        raise ValueError("Input images must have the same dimensions.")
+        msg = "Input images must have the same dimensions."
+        raise ValueError(msg)
     data_range = img1.max() - img1.min()
     if data_range == 0:
         return float("inf") if np.allclose(img1, img2) else float("nan")
@@ -11,7 +13,8 @@ def compute_psnr(img1: np.ndarray, img2: np.ndarray) -> float:
 
 def compute_ssim(img1: np.ndarray, img2: np.ndarray) -> float:
     if img1.shape != img2.shape:
-        raise ValueError("Input images must have the same dimensions.")
+        msg = "Input images must have the same dimensions."
+        raise ValueError(msg)
     data_range = img1.max() - img1.min()
     if data_range == 0:
         return 1.0 if np.allclose(img1, img2) else float("nan")
@@ -24,5 +27,6 @@ def compute_ssim(img1: np.ndarray, img2: np.ndarray) -> float:
 
 def compute_mse(img1: np.ndarray, img2: np.ndarray) -> float:
     if img1.shape != img2.shape:
-        raise ValueError("Input images must have the same dimensions.")
+        msg = "Input images must have the same dimensions."
+        raise ValueError(msg)
     return mean_squared_error(img1, img2)

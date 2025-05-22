@@ -3,7 +3,6 @@
 import pytest
 from click.testing import CliRunner
 
-
 from supreme_bassoon.cli import cli
 
 

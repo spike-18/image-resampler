@@ -7,6 +7,7 @@ from supreme_bassoon.methods import (
     piecewise_linear_interpolation,
 )
 
+
 def test_nearest_neighbor_identity() -> None:
     arr = np.arange(9).reshape(3, 3)
     out = nearest_neighbor(arr, 1)
@@ -41,11 +42,15 @@ def test_upscale_shapes() -> None:
 
 def test_methods_invalid_inputs() -> None:
     arr = None
-    for func in [nearest_neighbor, bilinear_interpolation, piecewise_linear_interpolation, l2_optimal_interpolation]:
-        try:
+    import contextlib
+    for func in [
+        nearest_neighbor,
+        bilinear_interpolation,
+        piecewise_linear_interpolation,
+        l2_optimal_interpolation,
+    ]:
+        with contextlib.suppress(Exception):
             func(arr, 2)
-        except Exception:
-            pass
 
 def test_nearest_neighbor_clip_branch() -> None:
     arr = np.arange(9).reshape(3, 3)

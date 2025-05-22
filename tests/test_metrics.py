@@ -3,6 +3,7 @@ import pytest
 
 from supreme_bassoon import metrics
 
+
 def test_compute_psnr_identical() -> None:
     arr = np.ones((10, 10), dtype=np.float32)
     psnr = metrics.compute_psnr(arr, arr)
