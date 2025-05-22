@@ -31,15 +31,16 @@ def docs(session) -> None:
     """Build the documentation."""
     # Install main dependencies
     session.run("poetry", "install", "--only", "main", external=True)
-    
+
     # Install docs dependencies through Poetry
     session.run("poetry", "install", "--only", "docs", external=True)
-    
+
     # Build the docs
     session.run(
         "sphinx-build",
-        "-b", "html",
+        "-b",
+        "html",
         "-W",  # Treat warnings as errors
         "docs",
-        "docs/_build"
+        "docs/_build",
     )

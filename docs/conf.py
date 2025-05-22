@@ -1,28 +1,28 @@
 """Sphinx configuration for IITP_INTERPOLATION documentation."""
 
-import os
 import sys
 from datetime import datetime
+from pathlib import Path
 
 # Add project directory to Python path
-sys.path.insert(0, os.path.abspath('../src'))
+sys.path.insert(0, str(Path("../src").resolve()))
 
 # -- Project information -----------------------------------------------------
 project = "supreme-bassoon"
 author = "Kirill Madorskii"
-copyright = f"{datetime.now().year}, {author}"
+copyright_str = f"{datetime.now(datetime.now().astimezone().tzinfo).year}, {author}"
 
 # -- General configuration ---------------------------------------------------
 extensions = [
-    "sphinx.ext.autodoc",         # Include documentation from docstrings
-    "sphinx.ext.napoleon",        # Support for Google/Numpy docstrings
-    "sphinx.ext.viewcode",        # Add links to source code
-    "sphinx.ext.intersphinx",     # Link to other projects' documentation
-    "sphinx.ext.mathjax",         # Render math
-    "sphinx_copybutton",          # Add copy button to code blocks
-    "sphinx_design",              # Better design elements
-    "sphinx.ext.autosummary",     # Generate autosummary
-    "sphinx.ext.githubpages",     # For GitHub Pages integration
+    "sphinx.ext.autodoc",  # Include documentation from docstrings
+    "sphinx.ext.napoleon",  # Support for Google/Numpy docstrings
+    "sphinx.ext.viewcode",  # Add links to source code
+    "sphinx.ext.intersphinx",  # Link to other projects' documentation
+    "sphinx.ext.mathjax",  # Render math
+    "sphinx_copybutton",  # Add copy button to code blocks
+    "sphinx_design",  # Better design elements
+    "sphinx.ext.autosummary",  # Generate autosummary
+    "sphinx.ext.githubpages",  # For GitHub Pages integration
 ]
 
 # Napoleon settings for docstring parsing
