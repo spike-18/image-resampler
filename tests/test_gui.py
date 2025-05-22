@@ -37,10 +37,11 @@ def test_gui_all_buttons(monkeypatch) -> None:
     monkeypatch.setattr(app, "display_image", lambda *_a, **_k: None)
     # Simulate button presses
     app.open_image()  # Should handle no file
-    app.upscale()     # Should handle no image
-    app.save_result() # Should handle no out_image
+    app.upscale()  # Should handle no image
+    app.save_result()  # Should handle no out_image
     # Now set dummy images and test again
     import numpy as np
+
     app.image = np.zeros((8, 8), dtype=np.uint8)
     app.out_image = np.ones((8, 8), dtype=np.uint8)
     app.upscale()
@@ -73,6 +74,7 @@ def test_gui_menu(monkeypatch) -> None:
 
 # Additional tests for coverage of gui.py
 
+
 def test_gui_upscale_with_method(monkeypatch) -> None:
     app = UpscaleApp()
     monkeypatch.setattr("tkinter.filedialog.askopenfilename", lambda *_a, **_k: "")
@@ -81,6 +83,7 @@ def test_gui_upscale_with_method(monkeypatch) -> None:
     monkeypatch.setattr("tkinter.messagebox.showerror", lambda *_a, **_k: None)
     monkeypatch.setattr(app, "display_image", lambda *_a, **_k: None)
     import numpy as np
+
     app.image = np.zeros((8, 8), dtype=np.uint8)
     app.method_var.set("Nearest Neighbor")
     app.scale_var.set(2)
@@ -102,5 +105,6 @@ def test_gui_save_result_success(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr("tkinter.messagebox.showinfo", lambda *_a, **_k: None)
     monkeypatch.setattr("tkinter.messagebox.showerror", lambda *_a, **_k: None)
     import numpy as np
+
     app.out_image = np.ones((8, 8), dtype=np.uint8)
     app.save_result()

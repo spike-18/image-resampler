@@ -17,12 +17,10 @@ from .methods import (
 @click.option("-m", "--method", default="nn", help="Method to use for interpolation. [nn|bl|pw|l2]")
 @click.option("-s", "--scale", type=int, default=2, help="Scaling factor.")
 @click.option(
-    "-v", "--verbose", is_flag=True, default=False,
-    help="Print interpolation parameters."
+    "-v", "--verbose", is_flag=True, default=False, help="Print interpolation parameters."
 )
 @click.option(
-    "--save", is_flag=True, default=False,
-    help="Save interpolated image to examples/output/."
+    "--save", is_flag=True, default=False, help="Save interpolated image to examples/output/."
 )
 def main(
     file: click.File,

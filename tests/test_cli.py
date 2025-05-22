@@ -74,6 +74,7 @@ def test_cli_upscale_invalid_method(tmp_path, runner: CliRunner) -> None:
 def test_main_entrypoint(monkeypatch) -> None:
     import importlib
     import sys
+
     # Patch sys.argv to simulate running as __main__
     sys_argv = sys.argv
     sys.argv = ["prog", "--help"]
@@ -88,6 +89,7 @@ def test_main_entrypoint(monkeypatch) -> None:
 
 def test_list_methods(monkeypatch) -> None:
     from supreme_bassoon.__main__ import list_methods
+
     called = {}
     monkeypatch.setattr("click.echo", lambda msg, **_: called.setdefault("echo", msg))
     list_methods()

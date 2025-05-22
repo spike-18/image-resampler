@@ -1,5 +1,47 @@
-.vscode
-src/supreme_bassoon/__pycache__
-output/*
-examples/output/*
-examples/*.jpg
+# Ignore Python cache and build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environments
+.venv/
+venv/
+
+# Ignore editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Ignore Sphinx build output
+/docs/_build/
+
+# Ignore test cache
+/.pytest_cache/
+
+# Ignore output and generated images
+output/
+examples/output/
+
+# Allow only source, docs, tests, and config files
+!src/
+!src/supreme_bassoon/
+!src/supreme_bassoon/*.py
+!docs/
+!docs/*.rst
+!docs/conf.py
+!docs/_static/
+!docs/_static/custom.css
+!examples/
+!examples/cat_1.jpg
+!examples/cat_2.jpg
+!examples/cat_3.jpg
+!examples/cat_4.jpg
+!examples/cat_5.jpg
+!LICENSE
+!README.md
+!pyproject.toml
+!poetry.lock
+!noxfile.py
+!tests/
+!tests/*.py

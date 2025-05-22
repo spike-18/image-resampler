@@ -40,6 +40,7 @@ def nearest_neighbor(
         out_image = np.clip(out_image, info.min, info.max)
     return out_image
 
+
 def bilinear_interpolation(image: np.ndarray, scale=1.0) -> np.ndarray:
     """
     Bilinear interpolation for upscaling images (vectorized).
@@ -75,6 +76,7 @@ def bilinear_interpolation(image: np.ndarray, scale=1.0) -> np.ndarray:
                 bottom = (1 - dy[j]) * image[x1[i], y0[j]] + dy[j] * image[x1[i], y1[j]]
                 out_image[i, j] = (1 - dx[i]) * top + dx[i] * bottom
     return out_image
+
 
 def piecewise_linear_interpolation(
     image: np.ndarray,
@@ -112,6 +114,7 @@ def piecewise_linear_interpolation(
                 out_image[i, :, c] = np.interp(col_indices, np.arange(in_w), temp[i, :, c])
     return out_image
 
+
 def l2_optimal_interpolation(image: np.ndarray, scale: int) -> np.ndarray:
     """
     L2 optimal interpolation via Fourier zero-padding for upscaling images.
@@ -120,6 +123,7 @@ def l2_optimal_interpolation(image: np.ndarray, scale: int) -> np.ndarray:
         msg = "L2 optimal interpolation via Fourier zero-padding requires an integer scale factor."
         raise ValueError(msg)
     scale = int(scale)
+
     def fourier_upscale(channel: np.ndarray) -> np.ndarray:
         h, w = channel.shape
         f = fftshift(fft2(channel))
@@ -133,6 +137,7 @@ def l2_optimal_interpolation(image: np.ndarray, scale: int) -> np.ndarray:
         ] = f
         upscaled = np.real(ifft2(ifftshift(f_up)))
         return upscaled * (scale**2)
+
     if image.ndim == 2:
         return fourier_upscale(image)
     channels = [fourier_upscale(image[..., c]) for c in range(image.shape[2])]

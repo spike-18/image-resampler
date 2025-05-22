@@ -99,7 +99,9 @@ def test_benchmark_downscale(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr(benchmark, "compute_ssim", lambda *_: 1)
     monkeypatch.setattr(benchmark, "compute_mse", lambda *_: 1)
     monkeypatch.setattr(
-        benchmark, "resize", lambda arr, shape, *a, **k: arr[: shape[0], : shape[1]]  # noqa: ARG005
+        benchmark,
+        "resize",
+        lambda arr, shape, *a, **k: arr[: shape[0], : shape[1]],  # noqa: ARG005
     )
     runner = CliRunner()
     result = runner.invoke(benchmark.benchmark, [str(img_path), "--scale", "2"])

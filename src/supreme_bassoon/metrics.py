@@ -11,6 +11,7 @@ def compute_psnr(img1: np.ndarray, img2: np.ndarray) -> float:
         return float("inf") if np.allclose(img1, img2) else float("nan")
     return peak_signal_noise_ratio(img1, img2, data_range=data_range)
 
+
 def compute_ssim(img1: np.ndarray, img2: np.ndarray) -> float:
     if img1.shape != img2.shape:
         msg = "Input images must have the same dimensions."
@@ -24,6 +25,7 @@ def compute_ssim(img1: np.ndarray, img2: np.ndarray) -> float:
     return structural_similarity(
         img1, img2, data_range=data_range, channel_axis=channel_axis, win_size=win_size
     )
+
 
 def compute_mse(img1: np.ndarray, img2: np.ndarray) -> float:
     if img1.shape != img2.shape:

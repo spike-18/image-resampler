@@ -17,12 +17,13 @@ def test_cli_upscale_help() -> None:
     assert result.exit_code == 0
     assert "method" in result.output
     # Accept both 'scaling factor' and 'Scaling factor' for robustness
-    assert ("scaling factor" in result.output.lower())
+    assert "scaling factor" in result.output.lower()
 
 
 def test_cli_example(monkeypatch) -> None:
     runner = CliRunner()
     import matplotlib.pyplot as plt
+
     monkeypatch.setattr(plt, "show", lambda: None)
     result = runner.invoke(cli.cli, ["example"])
     assert result.exit_code == 0
