@@ -1,6 +1,6 @@
 import contextlib
 
-from supreme_bassoon.gui import UpscaleApp
+from image_resampler.gui import UpscaleApp
 
 
 def test_gui_instantiates(monkeypatch) -> None:

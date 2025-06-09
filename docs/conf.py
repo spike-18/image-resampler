@@ -8,7 +8,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path("../src").resolve()))
 
 # -- Project information -----------------------------------------------------
-project = "supreme-bassoon"
+project = "image-resampler"
 author = "Kirill Madorskii"
 copyright_str = f"{datetime.now(datetime.now().astimezone().tzinfo).year}, {author}"
 
@@ -49,7 +49,7 @@ html_theme = "furo"  # Modern, clean theme (install with: pip install furo)
 
 
 html_theme_options = {
-    "source_repository": "https://github.com/canne16/supreme-bassoon",
+    "source_repository": "https://github.com/spike-18/image-resampler",
     "source_branch": "main",
     "source_directory": "docs/",
 }

@@ -1,9 +1,9 @@
-"""Test cases for the CLI module of supreme_bassoon."""
+"""Test cases for the CLI module of image_resampler."""
 
 import pytest
 from click.testing import CliRunner
 
-from supreme_bassoon.cli import cli
+from image_resampler.cli import cli
 
 
 @pytest.fixture
@@ -14,7 +14,7 @@ def runner() -> CliRunner:
 def test_cli_help(runner: CliRunner) -> None:
     result = runner.invoke(cli, ["--help"])
     assert result.exit_code == 0
-    assert "Supreme Bassoon" in result.output
+    assert "image-resampler" in result.output
     assert "upscale" in result.output
     assert "example" in result.output
     assert "benchmark" in result.output
@@ -45,7 +45,7 @@ def test_cli_example_runs(monkeypatch, runner: CliRunner) -> None:
 
 def test_cli_gui_runs(monkeypatch, runner: CliRunner) -> None:
     # Patch UpscaleApp to avoid opening a real window
-    from supreme_bassoon import gui as gui_module
+    from image_resampler import gui as gui_module
 
     class DummyApp:
         def mainloop(self) -> None:
@@ -81,14 +81,14 @@ def test_main_entrypoint(monkeypatch) -> None:
     # Patch click.echo to capture output
     called = {}
     monkeypatch.setattr("click.echo", lambda msg, **_: called.setdefault("echo", msg))
-    importlib.reload(__import__("supreme_bassoon.__main__", fromlist=["main"]))
+    importlib.reload(__import__("image_resampler.__main__", fromlist=["main"]))
     sys.argv = sys_argv
     # Accept any run without crash (coverage only, not strict on output)
     assert called is not None
 
 
 def test_list_methods(monkeypatch) -> None:
-    from supreme_bassoon.__main__ import list_methods
+    from image_resampler.__main__ import list_methods
 
     called = {}
     monkeypatch.setattr("click.echo", lambda msg, **_: called.setdefault("echo", msg))

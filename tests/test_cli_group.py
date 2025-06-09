@@ -1,6 +1,6 @@
 from click.testing import CliRunner
 
-from supreme_bassoon import cli
+from image_resampler import cli
 
 
 def test_cli_group_commands() -> None:
@@ -38,7 +38,7 @@ def test_cli_benchmark_help() -> None:
 
 def test_cli_gui(monkeypatch) -> None:
     runner = CliRunner()
-    from supreme_bassoon import gui as gui_module
+    from image_resampler import gui as gui_module
 
     class DummyApp:
         def mainloop(self) -> None:

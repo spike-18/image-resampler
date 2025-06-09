@@ -1,7 +1,7 @@
 import numpy as np
 from click.testing import CliRunner
 
-from supreme_bassoon import benchmark
+from image_resampler import benchmark
 
 
 def test_benchmark_help() -> None:

@@ -19,6 +19,6 @@ Guidelines:
 
 Resources:
 ----------
-- GitHub: https://github.com/canne16/supreme-bassoon
-- Issues: https://github.com/canne16/supreme-bassoon/issues
+- GitHub: https://github.com/spike-18/image-resampler
+- Issues: https://github.com/spike-18/image-resampler/issues
 - Author: Kirill Madorskii

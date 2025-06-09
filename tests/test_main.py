@@ -8,19 +8,19 @@ def test_main_entrypoint(monkeypatch) -> None:
     monkeypatch.setattr("click.echo", lambda msg, **_: called.setdefault("echo", msg))
     sys_argv = sys.argv
     sys.argv = ["prog", "--help"]
-    importlib.reload(importlib.import_module("supreme_bassoon.__main__"))
+    importlib.reload(importlib.import_module("image_resampler.__main__"))
     sys.argv = sys_argv
     # Accept either no output (if __main__ just prints usage) or any echo call
     assert called is not None  # Just check no crash, not strict on output
 
 
 def test_main_imports() -> None:
-    import supreme_bassoon.__main__  # noqa: F401
+    import image_resampler.__main__  # noqa: F401
 
 
 def test_main_function(monkeypatch) -> None:
     # Patch all side effects: load_image, save_image, methods, plt.show
-    import supreme_bassoon.__main__ as main_mod
+    import image_resampler.__main__ as main_mod
 
     monkeypatch.setattr(main_mod, "load_image", lambda *_a, **_k: __import__("numpy").zeros((8, 8)))
     monkeypatch.setattr(main_mod, "save_image", lambda *_a, **_k: None)
@@ -56,7 +56,7 @@ def test_main_function(monkeypatch) -> None:
 
 
 def test_list_methods(monkeypatch) -> None:
-    import supreme_bassoon.__main__ as main_mod
+    import image_resampler.__main__ as main_mod
 
     called = {}
     monkeypatch.setattr("click.echo", lambda msg, **_: called.setdefault("echo", msg))
@@ -65,7 +65,7 @@ def test_list_methods(monkeypatch) -> None:
 
 
 def test_main_invalid_file(monkeypatch) -> None:
-    import supreme_bassoon.__main__ as main_mod
+    import image_resampler.__main__ as main_mod
 
     class DummyFile:
         name = "not_an_image.txt"
@@ -103,7 +103,7 @@ def test_main_invalid_file(monkeypatch) -> None:
 
 
 def test_main_save_and_verbose(monkeypatch, tmp_path) -> None:
-    import supreme_bassoon.__main__ as main_mod
+    import image_resampler.__main__ as main_mod
 
     called = {}
     monkeypatch.setattr(main_mod, "load_image", lambda *_a, **_k: __import__("numpy").zeros((8, 8)))

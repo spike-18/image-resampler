@@ -1,6 +1,6 @@
 import pytest
 
-from supreme_bassoon.visualize import example
+from image_resampler.visualize import example
 
 
 def test_example_runs(monkeypatch) -> None:

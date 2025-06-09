@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from supreme_bassoon.io import load_image, save_image
+from image_resampler.io import load_image, save_image
 
 
 def test_load_image_and_save_image(tmp_path) -> None:

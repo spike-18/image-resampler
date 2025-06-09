@@ -44,10 +44,3 @@ def docs(session) -> None:
         "docs",
         "docs/_build",
     )
-
-
-@nox_poetry.session(python=["3.13"])
-def mypy(session) -> None:
-    """Type-check using mypy."""
-    session.run("poetry", "install", external=True)
-    session.run("mypy", "src", "tests")

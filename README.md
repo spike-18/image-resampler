@@ -1,6 +1,6 @@
-# Supreme Bassoon
+# image-resampler
 
-**Supreme Bassoon** is a modern Python toolkit for image interpolation and upscaling. It features a command-line interface, benchmarking tools, and a graphical user interface (GUI). Built with NumPy, Pillow, Matplotlib, and Click, it is designed for both ease of use and extensibility.
+**image-resampler** is a modern Python toolkit for image interpolation and upscaling. It features a command-line interface, benchmarking tools, and a graphical user interface (GUI). Built with NumPy, Pillow, Matplotlib, and Click, it is designed for both ease of use and extensibility.
 
 ![Example input image](examples/cat_1.jpg)
 
@@ -18,7 +18,7 @@
 
 ## Overview
 
-Supreme Bassoon provides several interpolation methods for upscaling images:
+image-resampler provides several interpolation methods for upscaling images:
 
 - **Nearest Neighbor (nn):** Assigns each new pixel the value of the closest original pixel.
 - **Bilinear (bl):** Uses a weighted average of the four nearest pixels.
@@ -30,8 +30,8 @@ Supreme Bassoon provides several interpolation methods for upscaling images:
 Clone the repository and install dependencies with Poetry:
 
 ```bash
-git clone https://github.com/canne16/supreme-bassoon.git
-cd supreme-bassoon
+git clone https://github.com/spike-18/image-resampler.git
+cd image-resampler
 poetry install
 ```
 
@@ -40,25 +40,25 @@ poetry install
 **Upscale an image from the command line:**
 
 ```bash
-poetry run supreme-bassoon upscale path/to/image.png -m bl -s 3 --save
+poetry run image-resampler upscale path/to/image.png -m bl -s 3 --save
 ```
 
 **Run the GUI:**
 
 ```bash
-poetry run supreme-bassoon gui
+poetry run image-resampler gui
 ```
 
 **Benchmark all methods:**
 
 ```bash
-poetry run supreme-bassoon benchmark path/to/image.png -s 2
+poetry run image-resampler benchmark path/to/image.png -s 2
 ```
 
 **Example comparison of methods:**
 
 ```bash
-poetry run supreme-bassoon example
+poetry run image-resampler example
 ```
 
 ## Command-Line Options
@@ -71,7 +71,7 @@ poetry run supreme-bassoon example
 
 ## Project Structure
 
-- `src/supreme_bassoon/`: Core package (CLI, GUI, methods, metrics, visualization)
+- `src/image_resampler/`: Core package (CLI, GUI, methods, metrics, visualization)
 - `tests/`: Unit tests
 - `docs/`: Documentation (Sphinx)
 - `examples/`: Example images

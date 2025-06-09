@@ -5,4 +5,4 @@ API Reference
    :toctree: _autosummary
    :recursive:
 
-   supreme_bassoon
+   image_resampler

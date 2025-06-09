@@ -1,7 +1,7 @@
 [project]
-name = "supreme-bassoon"
+name = "image-resampler"
 version = "0.1.0"
-description = "Basic interpolation"
+description = "Image interpolation methods"
 authors = [{name = "Kirill Madorskii",email = "madorskii.kv@gmail.com"}]
 readme = "README.md"
 
@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.scripts]
-supreme-bassoon = "supreme_bassoon.cli:cli"
+image-resampler = "image_resampler.cli:cli"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

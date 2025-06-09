@@ -1,4 +1,4 @@
-Supreme Bassoon Documentation
+image-resampler Documentation
 =============================
 
 A Python toolkit for image interpolation and upscaling, featuring a command-line interface, benchmarking, and a modern GUI. Built with NumPy, Pillow, Matplotlib, and Click.
@@ -9,7 +9,7 @@ A Python toolkit for image interpolation and upscaling, featuring a command-line
 
 Overview
 --------
-Supreme Bassoon provides several interpolation methods for upscaling images, including:
+image-resampler provides several interpolation methods for upscaling images, including:
 
 - **Nearest Neighbor (nn):** Assigns each new pixel the value of the closest original pixel.
 - **Bilinear (bl):** Uses a weighted average of the four nearest pixels.
@@ -36,25 +36,25 @@ Upscale an image from the command line:
 
 .. code-block:: bash
 
-   poetry run supreme-bassoon upscale path/to/image.png -m bl -s 3 --save
+   poetry run image-resampler upscale path/to/image.png -m bl -s 3 --save
 
 Run the GUI:
 
 .. code-block:: bash
 
-   poetry run supreme-bassoon gui
+   poetry run image-resampler gui
 
 Benchmark all methods:
 
 .. code-block:: bash
 
-   poetry run supreme-bassoon benchmark path/to/image.png -s 2
+   poetry run image-resampler benchmark path/to/image.png -s 2
 
 Example comparison of methods:
 
 .. code-block:: bash
 
-   poetry run supreme-bassoon example
+   poetry run image-resampler example
 
 Contents
 --------
@@ -75,5 +75,5 @@ Contributing
 ------------
 Contributions are welcome! Please see the :doc:`contributing` page, README, or open issues or pull requests on GitHub.
 
-- Source code: https://github.com/canne16/supreme-bassoon
+- Source code: https://github.com/spike-18/image-resampler
 - Author: Kirill Madorskii

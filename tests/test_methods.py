@@ -1,6 +1,6 @@
 import numpy as np
 
-from supreme_bassoon.methods import (
+from image_resampler.methods import (
     bilinear_interpolation,
     l2_optimal_interpolation,
     nearest_neighbor,

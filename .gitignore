@@ -25,8 +25,8 @@ examples/output/*
 
 # Allow only source, docs, tests, and config files
 !src/
-!src/supreme_bassoon/
-!src/supreme_bassoon/*.py
+!src/image_resampler/
+!src/image_resampler/*.py
 !docs/
 !docs/*.rst
 !docs/conf.py

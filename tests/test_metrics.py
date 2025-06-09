@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from supreme_bassoon import metrics
+from image_resampler import metrics
 
 
 def test_compute_psnr_identical() -> None:
